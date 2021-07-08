@@ -2,6 +2,11 @@ package bot
 
 import (
 	"testing"
+	"unicode"
+
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
 )
 
 // TestWTFSteroidChecker_Contains check that all possible messages can be recognized correctly
@@ -119,6 +124,36 @@ func TestWTFSteroidChecker_Contains(t *testing.T) {
 				message: "VVtf!",
 			},
 			want: true},
+		{name: "¡ɟʇʍ",
+			fields: fields{
+				message: "¡ɟʇʍ",
+			},
+			want: true},
+		{name: "¿ɟʇʍ",
+			fields: fields{
+				message: "¿ɟʇʍ",
+			},
+			want: true},
+		{name: "wtᷫ!",
+			fields: fields{
+				message: "wtᷫ!",
+			},
+			want: true},
+		{name: "wtᷥ!",
+			fields: fields{
+				message: "wtᷥ!",
+			},
+			want: true},
+		{name: "¡ȸɯʚ",
+			fields: fields{
+				message: "¡ȸɯʚ",
+			},
+			want: true},
+		{name: "¿ȸɯʚ",
+			fields: fields{
+				message: "¿ȸɯʚ",
+			},
+			want: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -132,7 +167,8 @@ func TestWTFSteroidChecker_Contains(t *testing.T) {
 	}
 }
 
-// Test that all symbols in the library are unique
+// TestWTFSteroidChecker_WTFUnicodeLibrary_Unique_Check check that all symbols in the library are unique
+// and key ASCII symbol is not in library
 func TestWTFSteroidChecker_WTFUnicodeLibrary_Unique_Check(t *testing.T) {
 	w := WTFSteroidChecker{}
 	unicodeLibrary := w.WTFUnicodeLibrary()
@@ -147,6 +183,64 @@ func TestWTFSteroidChecker_WTFUnicodeLibrary_Unique_Check(t *testing.T) {
 				checkMap[unicodeSymbol] = struct{}{}
 			} else {
 				t.Errorf("Duplicate symbol is %s looks like %s and in %d position in array", unicodeSymbol, mainLetter, numInArray)
+			}
+			if unicodeSymbol == mainLetter {
+				t.Errorf("Library should not have letter of a key letter %s in %d position in array", mainLetter, numInArray)
+			}
+		}
+	}
+}
+
+// TestWTFSteroidChecker_WTFUnicodeDiacreticLibrary_Unique_Check check that all symbols in diacretic library are unique
+// and key ASCII symbol is not in library
+func TestWTFSteroidChecker_WTFUnicodeDiacreticLibrary_Unique_Check(t *testing.T) {
+	w := WTFSteroidChecker{}
+	unicodeLibrary := w.WTFUnicodeDiacreticLibrary()
+	if len(unicodeLibrary) <= 0 {
+		t.Errorf("Library is empty")
+	}
+	checkMap := make(map[string]struct{})
+	for mainLetter, listOfUnicodes := range unicodeLibrary {
+		for numInArray, unicodeSymbol := range listOfUnicodes {
+			_, ok := checkMap[unicodeSymbol]
+			if !ok {
+				checkMap[unicodeSymbol] = struct{}{}
+			} else {
+				t.Errorf("Duplicate symbol is %s looks like %s and in %d position in array", unicodeSymbol, mainLetter, numInArray)
+			}
+			if unicodeSymbol == mainLetter {
+				t.Errorf("Library should not have letter of a key letter %s in %d position in array", mainLetter, numInArray)
+			}
+		}
+	}
+}
+
+// TestWTFSteroidChecker_WTFUnicodeLibrary_Diacretic_Check library should not have diacretic symbols
+// diacretic symbols remove separetly
+func TestWTFSteroidChecker_WTFUnicodeLibrary_Diacretic_Check(t *testing.T) {
+	w := WTFSteroidChecker{}
+	unicodeLibrary := w.WTFUnicodeLibrary()
+	for mainLetter, listOfUnicodes := range unicodeLibrary {
+		for numInArray, unicodeSymbol := range listOfUnicodes {
+			trans := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+			withoutDiacretic, _, _ := transform.String(trans, unicodeSymbol)
+			if unicodeSymbol != withoutDiacretic {
+				t.Errorf("Should not be diacretic symbol in library %s looks like %s and in %d position in array", unicodeSymbol, mainLetter, numInArray)
+			}
+		}
+	}
+}
+
+// TestWTFSteroidChecker_WTFUnicodeDiacreticLibrary_Diacretic_Check library should have only diacretic symbols
+func TestWTFSteroidChecker_WTFUnicodeDiacreticLibrary_Diacretic_Check(t *testing.T) {
+	w := WTFSteroidChecker{}
+	unicodeLibrary := w.WTFUnicodeDiacreticLibrary()
+	for mainLetter, listOfUnicodes := range unicodeLibrary {
+		for numInArray, unicodeSymbol := range listOfUnicodes {
+			trans := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+			withoutDiacretic, _, _ := transform.String(trans, unicodeSymbol)
+			if unicodeSymbol == withoutDiacretic {
+				t.Errorf("Should not be not diacretic in library %s looks like %s and in %d position in array", unicodeSymbol, mainLetter, numInArray)
 			}
 		}
 	}

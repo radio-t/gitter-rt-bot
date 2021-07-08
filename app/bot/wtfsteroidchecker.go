@@ -15,6 +15,18 @@ type WTFSteroidChecker struct {
 	message string
 }
 
+// WTFUnicodeDiacreticLibrary contains diacretic unicode symbols that looks like "w","t","f","!","?"
+// All symbols that removes by removeDiacretic function
+func (w *WTFSteroidChecker) WTFUnicodeDiacreticLibrary() map[string][]string {
+	repl := make(map[string][]string)
+	repl["w"] = []string{"ᷱ"}
+	repl["t"] = []string{"∤"}
+	repl["f"] = []string{"ᷥ", "ᷫ"}
+	repl["!"] = []string{"︁！"}
+	repl["?"] = []string{}
+	return repl
+}
+
 // WTFUnicodeLibrary contains unicode characters and strings that looks like "w","t","f","!","?"
 func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 	repl := make(map[string][]string)
@@ -39,14 +51,89 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"𝑤",
 		"𝕨",
 		"𝖜",
-		"ᷱ",
 		"ｗ",
 		"ꙍ",
 		"в",
+		"ʚ",
 		"₩",
 		"𝀥",
 		"⨈",
 		"🇼",
+		"Ꮃ",
+		"Ꮚ",
+		"Ꮤ",
+		"ᠠ",
+		"ᠢ",
+		"ᡅ",
+		"ᡞ",
+		"ᡳ",
+		"ᱦ",
+		"♆",
+		"♕",
+		"♛",
+		"⟱",
+		"⨄",
+		"ʬ",
+		"ѡ",
+		"Ѿ",
+		"ѿ",
+		"Ԝ",
+		"W",
+		"ꔲ",
+		"ꛃ",
+		"ꝡ",
+		"ꟽ",
+		"ꤿ",
+		"ꪟ",
+		"ꮗ",
+		"ꮚ",
+		"ꮤ",
+		"ꮿ",
+		"௰",
+		"ฝ",
+		"ฟ",
+		"ພ",
+		"ຟ",
+		"ཡ",
+		"￦",
+		"Ꮙ",
+		"ᐫ",
+		"ᔑ",
+		"ᗯ",
+		"ᗻ",
+		"ᘈ",
+		"ᙔ",
+		"ᙛ",
+		"ᙧ",
+		"Ѡ",
+		"Ѽ",
+		"ѽ",
+		"ש",
+		"𝕎",
+		"𝚆",
+		"𝐖",
+		"𝐰",
+		"𝑊",
+		"𝑾",
+		"𝒘",
+		"𝒲",
+		"𝓌",
+		"𝔀",
+		"𝔚",
+		"𝔴",
+		"𝖶",
+		"𝗐",
+		"𝗪",
+		"𝘄",
+		"𝘞",
+		"𝘸",
+		"𝙬",
+		"𝚠",
+		"𝛚",
+		"𝛡",
+		"𝞈",
+		"𝟂",
+		"𝟉",
 		"\\/\\/",
 		"🄦",
 		"⒲",
@@ -65,7 +152,6 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"ꝞꝞ",
 		"ꝟꝟ",
 		"ᴠᴠ",
-		"ṽṽ",
 		"🅅🅅",
 		"🆅🆅",
 		"ⱽⱽ",
@@ -99,7 +185,12 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"√√",
 		"ˇˇ",
 		"🄥🄥",
-		"⒱⒱"}
+		"⒱⒱",
+		"ᐁᐁ",
+		"∀∀",
+		"∇∇",
+		"⊽⊽",
+		"⋎⋎"}
 	repl["t"] = []string{
 		"丅",
 		"𐤯",
@@ -125,6 +216,7 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"ɫ",
 		"ꝉ",
 		"т",
+		"ɯ",
 		"⥡",
 		"🇹",
 		"╩",
@@ -135,12 +227,91 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"┴",
 		"┭",
 		"┬",
-		"∤",
 		"⸷",
 		"‡",
 		"†",
 		"🄣",
-		"⒯"}
+		"⒯",
+		"ቲ",
+		"ፐ",
+		"ፒ",
+		"ፔ",
+		"Ꭲ",
+		"Ꮏ",
+		"ᝨ",
+		"ƫ",
+		"Ƭ",
+		"ᴛ",
+		"₸",
+		"ℸ",
+		"⍑",
+		"⍡",
+		"Ⱦ",
+		"⤒",
+		"⫟",
+		"⫪",
+		"Ⲧ",
+		"ⲧ",
+		"ⴕ",
+		"ㅜ",
+		"ͳ",
+		"Ҭ",
+		"ҭ",
+		"T",
+		"ד",
+		"ߟ",
+		"फ",
+		"ꃌ",
+		"꓅",
+		"ꓔ",
+		"ꔋ",
+		"ꕛ",
+		"Ꚍ",
+		"Ꚑ",
+		"ꛙ",
+		"ꭲ",
+		"ꮦ",
+		"ﬢ",
+		"ｔ",
+		"ｾ",
+		"ﾃ",
+		"ﾅ",
+		"ﾓ",
+		"ￓ",
+		"ቸ",
+		"𝚃",
+		"𝐓",
+		"𝐭",
+		"𝑇",
+		"𝑡",
+		"𝑻",
+		"𝒕",
+		"𝒯",
+		"𝓉",
+		"𝓣",
+		"𝓽",
+		"𝔗",
+		"𝔱",
+		"𝕥",
+		"𝖳",
+		"𝗍",
+		"𝗧",
+		"𝘁",
+		"𝘛",
+		"𝘵",
+		"𝙏",
+		"𝙩",
+		"𝚝",
+		"𝚻",
+		"𝛕",
+		"𝛵",
+		"𝜏",
+		"𝜯",
+		"𝝉",
+		"𝝩",
+		"𝞃",
+		"𝞣",
+		"𝞽"}
 	repl["f"] = []string{
 		"𐌅",
 		"𖨝",
@@ -171,6 +342,7 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"𝖋",
 		"ｆ",
 		"ф",
+		"ȸ",
 		"Ғ",
 		"£",
 		"⨚",
@@ -179,10 +351,63 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"🇫",
 		"℉",
 		"🄕",
-		"⒡"}
+		"⒡",
+		"ɟ",
+		"ᖴ",
+		"F",
+		"ᶲ",
+		"ፑ",
+		"Ŧ",
+		"ғ",
+		"ߓ",
+		"ꈭ",
+		"ꊰ",
+		"ꓝ",
+		"ꘘ",
+		"ꝭ",
+		"ቀ",
+		"𝔽",
+		"𝙵",
+		"𝐅",
+		"𝐟",
+		"𝐹",
+		"𝑓",
+		"𝑭",
+		"𝒇",
+		"𝒥",
+		"𝒻",
+		"𝓕",
+		"𝔉",
+		"𝖥",
+		"𝖿",
+		"𝗙",
+		"𝗳",
+		"𝘍",
+		"𝘧",
+		"𝙁",
+		"𝙛",
+		"𝚏",
+		"𝛗",
+		"𝚽",
+		"𝛟",
+		"𝜑",
+		"𝛷",
+		"𝜙",
+		"𝝋",
+		"𝜱",
+		"𝝓",
+		"𝞅",
+		"𝝫",
+		"𝞍",
+		"𝞿",
+		"𝞥",
+		"𝟇",
+		"𝟊",
+		"𝟋"}
 	repl["!"] = []string{
 		"i",
 		"1",
+		"１",
 		"❗",
 		"❕",
 		"║",
@@ -193,11 +418,11 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"¡",
 		"︕",
 		"﹗",
-		"︁！",
 		"⁉",
 		"‼"}
 	repl["?"] = []string{
 		"7",
+		"７",
 		"❔",
 		"❓",
 		"⍰",
@@ -207,9 +432,18 @@ func (w *WTFSteroidChecker) WTFUnicodeLibrary() map[string][]string {
 		"︖",
 		"﹖",
 		"？",
-		"?",
 		"⁇",
-		"⁈"}
+		"⁈",
+		"‽",
+		"ʔ",
+		"ʡ",
+		"܊",
+		"ॽ",
+		"ɂ",
+		"⫀",
+		"⫂",
+		"ꛫ",
+		"꜅"}
 	return repl
 }
 
@@ -226,6 +460,17 @@ func (w *WTFSteroidChecker) removeDiacretic() {
 // removeUnicodeAnalog replace characters that looks like "w","t","f","!", "?" with their ASCII representation
 func (w *WTFSteroidChecker) removeUnicodeAnalog() {
 	replaceMap := w.WTFUnicodeLibrary()
+	for mainLetter, listOfUnicodes := range replaceMap {
+		for _, unicodeSymbol := range listOfUnicodes {
+			w.message = strings.ReplaceAll(w.message, unicodeSymbol, mainLetter)
+		}
+	}
+}
+
+// removeUnicodeDiacreticAnalog replace diacretic characters that looks like "w","t","f","!","?" with their ASCII representation
+// replace only characters that removes by removeUnicodeDiacreticAnalog function
+func (w *WTFSteroidChecker) removeUnicodeDiacreticAnalog() {
+	replaceMap := w.WTFUnicodeDiacreticLibrary()
 	for mainLetter, listOfUnicodes := range replaceMap {
 		for _, unicodeSymbol := range listOfUnicodes {
 			w.message = strings.ReplaceAll(w.message, unicodeSymbol, mainLetter)
@@ -260,11 +505,13 @@ func (w *WTFSteroidChecker) removeNotLetters() {
 func (w *WTFSteroidChecker) Contains() bool {
 
 	w.message = strings.ToLower(w.message)
+	w.removeUnicodeDiacreticAnalog()
 	w.removeDiacretic()
 	w.removeUnicodeAnalog()
 	w.removeNotASCIIAndNotRussian()
 	w.removeNotLetters()
 
-	return contains([]string{"wtf!", "wtf?"}, w.message)
+	// Straight and reverse order
+	return contains([]string{"wtf!", "wtf?"}, w.message) || contains([]string{"!ftw", "?ftw"}, w.message)
 
 }
